@@ -115,10 +115,22 @@ export class HashMap {
     }
 
     keys() {
-        const filteredKeys = this.array.filter(item => item !== undefined);
-        const currentKeys = filteredKeys.map(item => item.key);
+        const filteredItems = this.array.filter(item => item !== undefined);
+        const currentKeys = filteredItems.map(item => item.key);
 
         return currentKeys;
+
+        // refactor to handle linked list
+
+    }
+
+    values() {
+        const filteredItems = this.array.filter(item => item !== undefined);
+        const currentValues = filteredItems.map(item => item.value);
+
+        return currentValues;
+
+        // refactor to handle linked list
 
     }
 
