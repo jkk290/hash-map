@@ -134,5 +134,15 @@ export class HashMap {
 
     }
 
+    entries() {
+        const filteredItems = this.array.filter(item => item !== undefined);
+
+        const currentEntries = filteredItems.map(item => [item.key, item.value]);
+
+        return currentEntries;
+
+        // refactor to handle linked list
+    }
+
 
 }
