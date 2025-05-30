@@ -138,5 +138,14 @@ export class HashMap {
         // refactor to handle linked list
     }
 
+    resize() {
+        this.capacity *= 2;
+
+        const currentEntries = this.entries();
+
+        this.clear();
+        currentEntries.forEach(item => this.set(item[0], item[1]));
+    }
+
 
 }
