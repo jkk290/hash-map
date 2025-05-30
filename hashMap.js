@@ -110,5 +110,9 @@ export class HashMap {
 
     }
 
-    
+    clear() {
+        this.array = new Array(this.capacity);
+    }
+
+
 }
