@@ -18,6 +18,11 @@ export class HashMap {
 
     set(key, value) {
         let arrayIndex = this.hash(key);
+
+        if (arrayIndex < 0 || arrayIndex >= this.array.length) {
+            throw new Error("Trying to access index out of bounds");
+        }
+
         let oldValue = null;
 
         if (this.array[arrayIndex] === undefined) {
@@ -27,6 +32,27 @@ export class HashMap {
             this.array[arrayIndex] = {key: key, value: value};
         }
 
+        // refactor to implement linked list to avoid different keys with same hash code
+
         return oldValue;
+    }
+
+    get(key) {
+        let arrayIndex = this.hash(key);
+
+        if (arrayIndex < 0 || arrayIndex >= this.array.length) {
+            throw new Error("Trying to access index out of bounds");
+        }
+
+        if (this.array[arrayIndex] === undefined) {
+            return null;
+        } else if (this.array[arrayIndex].key !== key) {
+            return null;
+        } else {
+            return this.array[arrayIndex].value
+        }
+
+        // refactor to handle linked list within each index.
+
     }
 }
