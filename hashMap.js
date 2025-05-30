@@ -52,7 +52,26 @@ export class HashMap {
             return this.array[arrayIndex].value
         }
 
-        // refactor to handle linked list within each index.
+        // refactor to handle linked list within each index
+
+    }
+
+    has(key) {
+        let arrayIndex = this.hash(key);
+
+        if (arrayIndex < 0 || arrayIndex >= this.array.length) {
+            throw new Error("Trying to access index out of bounds");
+        }
+
+        if (this.array[arrayIndex] === undefined) {
+            return false;
+        } else if (this.array[arrayIndex].key !== key) {
+            return false;
+        } else {
+            return true;
+        }
+
+        // refactor to handle linked list within each index
 
     }
 }
