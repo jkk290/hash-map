@@ -74,4 +74,41 @@ export class HashMap {
         // refactor to handle linked list within each index
 
     }
+
+    remove(key) {
+        let arrayIndex = this.hash(key);
+
+        if (arrayIndex < 0 || arrayIndex >= this.array.length) {
+            throw new Error("Trying to access index out of bounds");
+        }
+
+        if (this.array[arrayIndex] === undefined) {
+            return false;
+        } else if (this.array[arrayIndex].key !== key) {
+            return false;
+        } else {
+            this.array[arrayIndex] = undefined;
+            return true;
+        }
+
+        // refactor to handle linked list within each index
+
+    }
+
+    length() {
+        let count = 0;
+
+        this.array.forEach(item => {
+            if (item !== undefined) {
+                count += 1
+            }
+        })
+
+        return count;
+
+        // refactor to handle linked list 
+
+    }
+
+    
 }
