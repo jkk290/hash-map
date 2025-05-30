@@ -24,3 +24,13 @@ Remember to grow your buckets to double their capacity when your hash map reache
 
 `entries()` returns an array that contains each `key, value` pair. Example: `[[firstKey, firstValue], [secondKey, secondValue]]`
 
+
+
+growing bucket
+    when setting a new object, check if load capacity will be reached
+    count + 1 / capacity >= load factor
+        if so, double the load capacity - this.capacity *= 2
+        get all entries from current bucket
+        clear bucket
+        set new objects for each item within the array from entries
+        set initial new object

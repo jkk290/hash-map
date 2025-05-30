@@ -3,6 +3,7 @@ export class HashMap {
         this.loadFactor = 0.75;
         this.capacity = 16;
         this.array = new Array(this.capacity);
+        this.count = 0;
     }
 
     hash(key) {
@@ -27,6 +28,7 @@ export class HashMap {
 
         if (this.array[arrayIndex] === undefined) {
             this.array[arrayIndex] = {key: key, value: value};
+            this.count += 1;
         } else {
             oldValue = this.array[arrayIndex];
             this.array[arrayIndex] = {key: key, value: value};
@@ -88,6 +90,7 @@ export class HashMap {
             return false;
         } else {
             this.array[arrayIndex] = undefined;
+            this.count -= 1;
             return true;
         }
 
@@ -96,22 +99,13 @@ export class HashMap {
     }
 
     length() {
-        let count = 0;
-
-        this.array.forEach(item => {
-            if (item !== undefined) {
-                count += 1
-            }
-        })
-
-        return count;
-
-        // refactor to handle linked list 
+        return this.count;
 
     }
 
     clear() {
         this.array = new Array(this.capacity);
+        this.count = 0;
     }
 
     keys() {
