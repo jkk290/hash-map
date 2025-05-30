@@ -114,5 +114,13 @@ export class HashMap {
         this.array = new Array(this.capacity);
     }
 
+    keys() {
+        const filteredKeys = this.array.filter(item => item !== undefined);
+        const currentKeys = filteredKeys.map(item => item.key);
+
+        return currentKeys;
+
+    }
+
 
 }
