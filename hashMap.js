@@ -1,4 +1,4 @@
-export class hashMap {
+export class HashMap {
     constructor() {
         this.loadFactor = 0.75;
         this.capacity = 16;
@@ -17,6 +17,16 @@ export class hashMap {
     }
 
     set(key, value) {
+        let arrayIndex = this.hash(key);
+        let oldValue = null;
 
+        if (this.array[arrayIndex] === undefined) {
+            this.array[arrayIndex] = {key: key, value: value};
+        } else {
+            oldValue = this.array[arrayIndex];
+            this.array[arrayIndex] = {key: key, value: value};
+        }
+
+        return oldValue;
     }
 }
