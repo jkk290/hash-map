@@ -26,6 +26,10 @@ export class HashMap {
 
         let oldValue = null;
 
+        if ((this.count + 1) / this.capacity >= this.loadFactor) {
+            this.resize();
+        }
+
         if (this.array[arrayIndex] === undefined) {
             this.array[arrayIndex] = {key: key, value: value};
             this.count += 1;
