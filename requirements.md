@@ -34,3 +34,23 @@ growing bucket
         clear bucket
         set new objects for each item within the array from entries
         set initial new object
+
+
+implementing linked list
+    when setting a new object, check if key exist
+        if doesnt exist, set new object at array index
+        if exist, check if same key
+            if same key, update value
+            if different key, check if already linked list
+                if not, get key and value of existing object
+                    create new LinkedList
+                    set to current array index
+                    create current object as new node
+                    set as head
+                    create new object as another node linked to previous
+            if linked list, traverse to end
+                if find a same key
+                    update that key value
+                if dont find same key
+                    create new object as another node linked to previous
+        
