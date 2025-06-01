@@ -154,15 +154,41 @@ export class HashMap {
 
         if (this.array[arrayIndex] === undefined) {
             return false;
-        } else if (this.array[arrayIndex].key !== key) {
-            return false;
-        } else {
+        } else if (this.array[arrayIndex].key === key) {
             this.array[arrayIndex] = undefined;
             this.count -= 1;
             return true;
+
+        } else if (this.array[arrayIndex].key !== key) {
+            if (this.array[arrayIndex].head === undefined) {
+                return false;
+            } else {
+                let currentNode = this.array[arrayIndex].head;
+                let previousNode = null;
+
+                while (currentNode != null) {
+                    if (currentNode.value.key === key) {
+                        if (previousNode === null) {
+                            this.array[arrayIndex].head = currentNode.nextNode;
+
+                        } else {
+                            previousNode.nextNode = currentNode.nextNode;
+                            
+
+                        }
+                        this.count -= 1;
+                        return true;
+                        
+                    } else {
+                        previousNode = currentNode;
+                        currentNode = currentNode.nextNode;
+                    }
+                }
+
+                return false;
+            }
         }
 
-        // refactor to handle linked list within each index
 
     }
 
