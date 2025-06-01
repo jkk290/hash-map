@@ -118,13 +118,30 @@ export class HashMap {
 
         if (this.array[arrayIndex] === undefined) {
             return false;
-        } else if (this.array[arrayIndex].key !== key) {
-            return false;
-        } else {
+
+        } else if (this.array[arrayIndex].key === key) { 
             return true;
+
+        } else if (this.array[arrayIndex].key !== key) {
+            if (this.array[arrayIndex].head === undefined) {
+                return false;
+            } else {
+                let currentNode = this.array[arrayIndex].head;
+
+                while (currentNode != null) {
+                    if (currentNode.value.key === key) {
+                        return true;
+                    } else {
+                        currentNode = currentNode.nextNode;
+                    }
+                }
+
+                return false;
+
+            }
+
         }
 
-        // refactor to handle linked list within each index
 
     }
 
