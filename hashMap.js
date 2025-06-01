@@ -83,13 +83,29 @@ export class HashMap {
 
         if (this.array[arrayIndex] === undefined) {
             return null;
-        } else if (this.array[arrayIndex].key !== key) {
-            return null;
-        } else {
-            return this.array[arrayIndex].value
-        }
 
-        // refactor to handle linked list within each index
+        } else if (this.array[arrayIndex].key === key) {
+            return this.array[arrayIndex].value;
+
+        } else if (this.array[arrayIndex].key !== key) {
+            if (this.array[arrayIndex].head === undefined) {
+                return null;
+            } else {
+                let currentNode = this.array[arrayIndex].head;
+
+                while (currentNode != null) {
+                    if (currentNode.value.key === key) {
+                        return currentNode.value;
+                    } else {
+                        currentNode = currentNode.nextNode;
+                    }
+                }
+
+                return null;
+
+            }
+
+        }
 
     }
 
