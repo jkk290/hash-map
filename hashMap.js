@@ -229,12 +229,29 @@ export class HashMap {
     }
 
     values() {
-        const filteredItems = this.array.filter(item => item !== undefined);
-        const currentValues = filteredItems.map(item => item.value);
+        let currentValues = [];
+
+        this.array.forEach((item, index) => {
+            if (item === undefined) {
+                return;
+
+            } else if (item.head === undefined) {
+                currentValues.push(item.value);
+
+            } else {
+                currentValues.push(item.value);
+                let currentNode = item.head;
+                
+                while (currentNode != null) {
+                    currentValues.push(currentNode.value.value);
+                    currentNode = currentNode.nextNode;
+                }
+                
+            }
+        });
 
         return currentValues;
-
-        // refactor to handle linked list
+        
 
     }
 
