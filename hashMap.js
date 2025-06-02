@@ -178,7 +178,7 @@ export class HashMap {
                         }
                         this.count -= 1;
                         return true;
-                        
+
                     } else {
                         previousNode = currentNode;
                         currentNode = currentNode.nextNode;
@@ -203,12 +203,28 @@ export class HashMap {
     }
 
     keys() {
-        const filteredItems = this.array.filter(item => item !== undefined);
-        const currentKeys = filteredItems.map(item => item.key);
+        let currentKeys = [];
+
+        this.array.forEach((item, index) => {
+            if (item === undefined) {
+                return;
+
+            } else if (item.head === undefined) {
+                currentKeys.push(item.key);
+
+            } else {
+                currentKeys.push(item.key);
+                let currentNode = item.head;
+                
+                while (currentNode != null) {
+                    currentKeys.push(currentNode.value.key);
+                    currentNode = currentNode.nextNode;
+                }
+                
+            }
+        });
 
         return currentKeys;
-
-        // refactor to handle linked list
 
     }
 
