@@ -215,7 +215,7 @@ export class HashMap {
 
             } else {
                 currentKeys.push(item.key);
-                
+
             }
 
         });
@@ -231,19 +231,19 @@ export class HashMap {
             if (item === undefined) {
                 return;
 
-            } else if (item.head === undefined) {
-                currentValues.push(item.value);
-
-            } else {
-                currentValues.push(item.value);
+            } else if (item instanceof LinkedList) {
                 let currentNode = item.head;
-                
+
                 while (currentNode != null) {
                     currentValues.push(currentNode.value.value);
                     currentNode = currentNode.nextNode;
                 }
-                
+
+            } else {
+                currentValues.push(item.value);
+
             }
+            
         });
 
         return currentValues;
