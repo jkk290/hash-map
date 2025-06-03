@@ -155,36 +155,35 @@ export class HashMap {
             this.count -= 1;
             return true;
 
-        } else if (this.array[arrayIndex].key !== key) {
-            if (this.array[arrayIndex].head === undefined) {
-                return false;
-            } else {
-                let currentNode = this.array[arrayIndex].head;
-                let previousNode = null;
+        } else if (this.array[arrayIndex] instanceof LinkedList) {
+            let currentNode = this.array[arrayIndex].head;
+            let previousNode = null;
 
-                while (currentNode != null) {
-                    if (currentNode.value.key === key) {
-                        if (previousNode === null) {
-                            this.array[arrayIndex].head = currentNode.nextNode;
-
-                        } else {
-                            previousNode.nextNode = currentNode.nextNode;
-                            
-
-                        }
-                        this.count -= 1;
-                        return true;
+            while (currentNode != null) {
+                if (currentNode.value.key === key) {
+                    if (previousNode === null) {
+                        this.array[arrayIndex].head = currentNode.nextNode;
 
                     } else {
-                        previousNode = currentNode;
-                        currentNode = currentNode.nextNode;
+                        previousNode.nextNode = currentNode.nextNode;
+
                     }
+                    this.count -= 1;
+                    return true;
+
+                } else {
+                    previousNode = currentNode;
+                    currentNode = currentNode.nextNode;
+
                 }
-
-                return false;
             }
-        }
 
+            return false;
+            
+        } else {
+            return false;
+
+        }
 
     }
 
@@ -205,19 +204,20 @@ export class HashMap {
             if (item === undefined) {
                 return;
 
-            } else if (item.head === undefined) {
-                currentKeys.push(item.key);
-
-            } else {
-                currentKeys.push(item.key);
+            } else if (item instanceof LinkedList) {
                 let currentNode = item.head;
-                
+
                 while (currentNode != null) {
                     currentKeys.push(currentNode.value.key);
                     currentNode = currentNode.nextNode;
+
                 }
+
+            } else {
+                currentKeys.push(item.key);
                 
             }
+
         });
 
         return currentKeys;
