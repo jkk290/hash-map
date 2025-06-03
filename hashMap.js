@@ -119,29 +119,25 @@ export class HashMap {
         if (this.array[arrayIndex] === undefined) {
             return false;
 
-        } else if (this.array[arrayIndex].key === key) { 
-            return true;
+        } else if (this.array[arrayIndex] instanceof LinkedList) {
+            let currentNode = this.array[arrayIndex].head;
 
-        } else if (this.array[arrayIndex].key !== key) {
-            if (this.array[arrayIndex].head === undefined) {
-                return false;
-            } else {
-                let currentNode = this.array[arrayIndex].head;
-
-                while (currentNode != null) {
-                    if (currentNode.value.key === key) {
-                        return true;
-                    } else {
-                        currentNode = currentNode.nextNode;
-                    }
+            while (currentNode != null) {
+                if (currentNode.value.key === key) {
+                    return true;
                 }
-
-                return false;
-
+                currentNode = currentNode.nextNode;
             }
 
-        }
+            return false;
+            
+        }  else if (this.array[arrayIndex].key === key){
+            return true;
 
+        } else {
+            return false;
+
+        }
 
     }
 
