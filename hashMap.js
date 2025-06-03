@@ -256,13 +256,28 @@ export class HashMap {
     }
 
     entries() {
-        const filteredItems = this.array.filter(item => item !== undefined);
 
-        const currentEntries = filteredItems.map(item => [item.key, item.value]);
+        let currentEntries = [];
 
-        return currentEntries;
+        this.array.forEach((item) => {
+            if (item === undefined) {
+                return;
+            } else if (item.head === undefined) {
+                currentEntries.push(item);
+            } else {
+                currentEntries.push(item);
+                let currentNode = item.head;
 
-        // refactor to handle linked list
+                while (currentNode != null) {
+                    currentEntries.push(currentNode.value);
+                    currentNode = currentNode.nextNode;
+                }
+            }
+        })
+
+        let formattedEntries = currentEntries.map(item => [item.key, item.value]);
+
+        return formattedEntries;
     }
 
     resize() {
