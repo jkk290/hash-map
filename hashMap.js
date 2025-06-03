@@ -10,7 +10,7 @@ export class HashMap {
 
     hash(key) {
         let hashCode = 0;
-
+        
         const primeNumber = 31;
         for (let i = 0; i < key.length; i++) {
             hashCode = (primeNumber * (hashCode + key.charCodeAt(i))) % this.capacity;
@@ -20,6 +20,7 @@ export class HashMap {
     }
 
     set(key, value) {
+        
         let arrayIndex = this.hash(key);
 
         if (arrayIndex < 0 || arrayIndex >= this.array.length) {
@@ -262,16 +263,17 @@ export class HashMap {
         this.array.forEach((item) => {
             if (item === undefined) {
                 return;
-            } else if (item.head === undefined) {
-                currentEntries.push(item);
-            } else {
-                currentEntries.push(item);
+            } 
+            
+            if (item instanceof LinkedList) {
                 let currentNode = item.head;
 
                 while (currentNode != null) {
                     currentEntries.push(currentNode.value);
                     currentNode = currentNode.nextNode;
                 }
+            } else {
+                currentEntries.push(item);
             }
         })
 
@@ -286,7 +288,13 @@ export class HashMap {
         const currentEntries = this.entries();
 
         this.clear();
-        currentEntries.forEach(item => this.set(item[0], item[1]));
+        currentEntries.forEach(item => {
+            if (item === undefined) {
+                return;
+            }
+
+            this.set(item[0], item[1])
+        });
     }
 
 
