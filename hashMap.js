@@ -28,9 +28,11 @@ export class HashMap {
         }
 
         let oldValue = null;
+        const existingKey = this.has(key);
 
-        if ((this.count + 1) / this.capacity >= this.loadFactor) {
+        if (!existingKey && (this.count + 1) / this.capacity >= this.loadFactor) {
             this.resize();
+            arrayIndex = this.hash(key);
         }
 
         if (this.array[arrayIndex] === undefined) {
@@ -38,38 +40,37 @@ export class HashMap {
             this.count += 1;
 
         } else if (this.array[arrayIndex].key === key) {
-            oldValue = this.array[arrayIndex];
+            oldValue = this.array[arrayIndex].value;
             this.array[arrayIndex] = {key: key, value: value};
 
         } else if (this.array[arrayIndex].key !== key) {
-            if (this.array[arrayIndex].head === undefined) {
-                let listHead = this.array[arrayIndex];
-                this.array[arrayIndex] = new LinkedList();
-                this.array[arrayIndex].append(listHead);
-                this.array[arrayIndex].append({key: key, value: value});
-                this.count += 1;
+                if (this.array[arrayIndex] instanceof LinkedList) {
+                    let currentNode = this.array[arrayIndex].head;
+                    let found = false;
 
-            } else {
-                let currentNode = this.array[arrayIndex].head;
-                let found = false;
+                    while (currentNode !== null && !found) {
+                        if (currentNode.value.key ===key) {
+                            oldValue = currentNode.value.value;
+                            currentNode.value = {key: key, value: value};
+                            found = true;
+                        } else {
+                            currentNode = currentNode.nextNode;
+                        }
+                    }
 
-                while (currentNode !== null && !found) {
-                    if (currentNode.value.key === key) {
-                        oldValue = currentNode.value;
-                        currentNode.value = {key: key, value: value};
-                        found = true;
-                    } else {
-                        currentNode = currentNode.nextNode;
-                    }                    
+                    if (!found) {
+                        this.array[arrayIndex].append({key: key, value: value});
+                        this.count += 1;
+                    }
+                } else {
                     
-                }
-
-                if (!found) {
+                    let listHead = this.array[arrayIndex];
+                    this.array[arrayIndex] = new LinkedList();
+                    this.array[arrayIndex].append(listHead);
                     this.array[arrayIndex].append({key: key, value: value});
                     this.count += 1;
-                }
                 
-            }
+                }
         }
 
         return oldValue;
@@ -84,30 +85,28 @@ export class HashMap {
 
         if (this.array[arrayIndex] === undefined) {
             return null;
-
-        } else if (this.array[arrayIndex].key === key) {
-            return this.array[arrayIndex].value;
-
-        } else if (this.array[arrayIndex].key !== key) {
-            if (this.array[arrayIndex].head === undefined) {
-                return null;
-            } else {
-                let currentNode = this.array[arrayIndex].head;
-
-                while (currentNode != null) {
-                    if (currentNode.value.key === key) {
-                        return currentNode.value;
-                    } else {
-                        currentNode = currentNode.nextNode;
-                    }
-                }
-
-                return null;
-
-            }
-
         }
+        
+        else if (this.array[arrayIndex] instanceof LinkedList) {
+            let currentNode = this.array[arrayIndex].head;
 
+            while (currentNode != null) {
+                if (currentNode.value.key === key) {
+                    return currentNode.value; 
+                }
+                currentNode = currentNode.nextNode; 
+            }
+            
+            return null;
+        }
+        
+        else if (this.array[arrayIndex].key === key) {
+            return this.array[arrayIndex].value;
+        }
+        
+        else {
+            return null;
+        }
     }
 
     has(key) {
